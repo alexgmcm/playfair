@@ -1,6 +1,7 @@
 package playfair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Encryptor {
@@ -35,6 +36,60 @@ public class Encryptor {
         return this.key.toUpperCase().replaceAll("[^A-Z]","");
     }
 
+
+
+    public String[] plaintextToBigrams(){
+        char[] cleanPlaintextArr;
+        int bigramIndex;
+        int bigramListIndex;
+        int plaintextIndex;
+        List<StringBuilder> bigramBuilderList;
+        char prevCharInBigram;
+        char curChar;
+        List<String> bigramList;
+
+
+        prevCharInBigram=' ';
+        cleanPlaintextArr = this.plaintext.toUpperCase().replaceAll("[^A-Z]","").toCharArray();
+        bigramBuilderList = new ArrayList<>();
+        bigramIndex = 0;
+        bigramListIndex = 0;
+        plaintextIndex=0;
+        bigramList = new ArrayList<>();
+
+        while(plaintextIndex<cleanPlaintextArr.length){
+            curChar = cleanPlaintextArr[plaintextIndex];
+
+            if (bigramIndex%2==0){ //init new bigram
+                bigramBuilderList.add(new StringBuilder(2));
+                prevCharInBigram = ' ';
+            }
+
+            if(curChar == prevCharInBigram){
+                //Add X to current bigram
+                bigramBuilderList.get(bigramListIndex).append('X');
+                //increase bigram index
+                bigramIndex++;
+            }
+            else {
+                //add cur
+                bigramBuilderList.get(bigramListIndex).append(curChar);
+                bigramIndex++;
+                //char processed, move to next one
+                prevCharInBigram=curChar;
+                plaintextIndex++;
+            }
+            bigramListIndex = bigramIndex/2;
+        }
+
+        for (StringBuilder sb : bigramBuilderList){
+            bigramList.add(sb.toString());
+        }
+
+        Object[] bigramArray = bigramList.toArray();
+        return Arrays.copyOf(bigramArray,bigramArray.length,String[].class);
+    }
+
     public String removeDuplicateChars(String str, boolean keepFirst){
         //maybe we never use keepFirst=False?
         List<Character> alreadySeen;
@@ -54,8 +109,9 @@ public class Encryptor {
             }
         }
         return outputStr.toString();
-
     }
+
+
 
 
 }

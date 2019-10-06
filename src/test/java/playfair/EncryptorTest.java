@@ -65,4 +65,13 @@ class EncryptorTest {
         assertEquals(EXPECTED, ACTUAL);
 
     }
+
+    @Test
+    @DisplayName("Should create correct bigram array.")
+    void shouldCreateBigramArray() {
+        String[] EXPECTED = {"HI","DE","TH","EG", "OL", "DI", "NT", "HE", "TR", "EX", "ES", "TU", "MP"};
+        String[] ACTUAL = testEncryptor.plaintextToBigrams();
+        assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", Arrays.deepToString(ACTUAL)));
+
+    }
 }
