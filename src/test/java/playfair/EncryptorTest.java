@@ -74,4 +74,13 @@ class EncryptorTest {
         assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", Arrays.deepToString(ACTUAL)));
 
     }
+    @Test
+    @DisplayName("Should pad final bigram.")
+    void shouldPadFinalBigram() {
+        testEncryptor.setPlaintext("Hide the gold in the tree stum");
+        String[] EXPECTED = {"HI","DE","TH","EG", "OL", "DI", "NT", "HE", "TR", "EX", "ES", "TU", "MX"};
+        String[] ACTUAL = testEncryptor.plaintextToBigrams();
+        assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", Arrays.deepToString(ACTUAL)));
+
+    }
 }

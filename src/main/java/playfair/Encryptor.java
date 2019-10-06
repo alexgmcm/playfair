@@ -18,6 +18,11 @@ public class Encryptor {
         this.plaintext=plaintext;
     }
 
+    public void setPlaintext(String plaintext){
+        this.plaintext=plaintext;
+    }
+
+
     public char[][] generatekeyGrid(){
         char[][] keyGrid = new char[5][5];
         this.key = this.cleanKeyString();
@@ -80,6 +85,12 @@ public class Encryptor {
                 plaintextIndex++;
             }
             bigramListIndex = bigramIndex/2;
+        }
+
+        //if final bigram is not complete, append X
+        StringBuilder finalBigram = bigramBuilderList.get(bigramBuilderList.size()-1);
+        if(finalBigram.length()==1){
+            finalBigram.append('X');
         }
 
         for (StringBuilder sb : bigramBuilderList){
