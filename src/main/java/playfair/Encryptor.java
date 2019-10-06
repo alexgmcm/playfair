@@ -101,6 +101,35 @@ public class Encryptor {
         return Arrays.copyOf(bigramArray,bigramArray.length,String[].class);
     }
 
+    public String encryptBigram(String plainBigram){
+        /* Rule 1:
+          If the letters appear on the same row of your table,
+          replace them with the letters to their immediate right respectively,
+          wrapping around to the left side of the row if a letter in the original pair
+          was on the right side of the row).
+         */
+
+
+
+        /* Rule 2:
+            If the letters appear on the same column of your table,
+            replace them with the letters immediately below respectively,
+             wrapping around to the top side of the column if a letter in the original pair
+             was on the bottom side of the column
+         */
+
+
+
+        /*  Rule 3:
+            If the letters are not on the same row or column,
+             replace them with the letters on the same row respectively
+              but at the other pair of corners of the rectangle defined by the original pair.
+               The order is important – the first letter of the encrypted pair is the one
+               that lies on the same row as the first letter of the plaintext pair.
+         */
+
+    }
+
     public String removeDuplicateChars(String str, boolean keepFirst){
         //maybe we never use keepFirst=False?
         List<Character> alreadySeen;
