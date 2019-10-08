@@ -99,15 +99,20 @@ public class Encryptor {
 
         Object[] bigramArray = bigramList.toArray();
         return Arrays.copyOf(bigramArray,bigramArray.length,String[].class);
+        //TODO: return array of char arrays (i.e. each bigram is char array not string)
+        //
     }
 
-    public String encryptBigram(String plainBigram){
+   // public String encryptBigram(String plainBigram, char[][] keyGrid){
         /* Rule 1:
           If the letters appear on the same row of your table,
           replace them with the letters to their immediate right respectively,
           wrapping around to the left side of the row if a letter in the original pair
           was on the right side of the row).
          */
+
+//        char[] bigramCharArray = plainBigram.toCharArray();
+
 
 
 
@@ -128,6 +133,27 @@ public class Encryptor {
                that lies on the same row as the first letter of the plaintext pair.
          */
 
+    //}
+
+
+    public int[] searchKeyGrid(char[][] keyGrid,char target_ch){
+        int j=0;
+        int[] char_indices;
+        for (char[] subArray : keyGrid){
+                int i=0;
+
+                for (char candidate_ch : subArray) {
+                    if (target_ch == candidate_ch) {
+                        char_indices = new int[] {j,i};
+                        return char_indices;
+                    }
+                    else {i++;}
+                }
+                j++;
+            }
+        System.out.println("Character " + target_ch + " not found in keygrid.");
+        char_indices = new int[] {-1,-1};
+        return char_indices;
     }
 
     public String removeDuplicateChars(String str, boolean keepFirst){
@@ -135,7 +161,8 @@ public class Encryptor {
         List<Character> alreadySeen;
         StringBuilder outputStr;
         outputStr = new StringBuilder();
-        alreadySeen = new ArrayList<>(); //should be hashmap
+        alreadySeen = new ArrayList<>();
+        //TODO: should be hashmap
         for (char c : str.toCharArray()){
             if (!alreadySeen.contains(c)){
                 outputStr.append(c);

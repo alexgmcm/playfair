@@ -83,4 +83,15 @@ class EncryptorTest {
         assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", Arrays.deepToString(ACTUAL)));
 
     }
+
+    @Test
+    @DisplayName("Should find char in keygrid.")
+    void shouldSearchKeygrid() {
+        char[][] keyGrid = testEncryptor.generatekeyGrid();
+        char targetChar='X';
+        int[] EXPECTED = {1,3};
+        int[] ACTUAL = testEncryptor.searchKeyGrid(keyGrid,targetChar);
+        assertArrayEquals(EXPECTED, ACTUAL);
+
+    }
 }
