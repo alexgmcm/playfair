@@ -110,6 +110,7 @@ public class Encryptor {
           wrapping around to the left side of the row if a letter in the original pair
           was on the right side of the row).
          */
+        //testpush
 
 //        char[] bigramCharArray = plainBigram.toCharArray();
 
