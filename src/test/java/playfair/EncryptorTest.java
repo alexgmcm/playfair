@@ -123,4 +123,11 @@ class EncryptorTest {
         assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", new String(ACTUAL)));
     }
 
+    @Test
+    @DisplayName("Should return encrypted plaintext")
+    void shouldEncrypt() {
+        String EXPECTED = "BM OD ZB XD NA BE KU DM UI XM MO UV IF";
+        String ACTUAL = testEncryptor.encrypt();
+        assertEquals(EXPECTED, ACTUAL);
+    }
 }

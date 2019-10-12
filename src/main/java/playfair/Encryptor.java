@@ -19,6 +19,17 @@ public class Encryptor {
         this.plaintext=plaintext;
     }
 
+    public String encrypt(){
+        List<String> bigramArray;
+        bigramArray=new ArrayList<>();
+        char[][] keyGrid = this.generatekeyGrid();
+        String[] plainBigrams=plaintextToBigrams();
+        for (String bigram : plainBigrams){
+            bigramArray.add(new String(encryptBigram(bigram,keyGrid)));
+        }
+        return String.join(" ",bigramArray);
+    }
+
     public void setPlaintext(String plaintext){
         this.plaintext=plaintext;
     }
