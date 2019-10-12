@@ -81,7 +81,6 @@ class EncryptorTest {
         String[] EXPECTED = {"HI","DE","TH","EG", "OL", "DI", "NT", "HE", "TR", "EX", "ES", "TU", "MX"};
         String[] ACTUAL = testEncryptor.plaintextToBigrams();
         assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", Arrays.deepToString(ACTUAL)));
-
     }
 
     @Test
@@ -92,6 +91,17 @@ class EncryptorTest {
         int[] EXPECTED = {1,3};
         int[] ACTUAL = testEncryptor.searchKeyGrid(keyGrid,targetChar);
         assertArrayEquals(EXPECTED, ACTUAL);
-
     }
+
+    @Test
+    @DisplayName("Should encrypt bigram with letters on same row")
+    void shouldEncryptBigramSameRow() {
+        char[][] keyGrid = testEncryptor.generatekeyGrid();
+        String bigram ="YF";
+        char[] EXPECTED = {'F','P'};
+        char[] ACTUAL = testEncryptor.encryptBigram(bigram,keyGrid);
+        assertArrayEquals(EXPECTED, ACTUAL);
+    }
+
+
 }

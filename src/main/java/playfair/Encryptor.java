@@ -1,8 +1,9 @@
 package playfair;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
+//TODO: Create KeyGrid class with its own tests and methods
+//TODO: Create BigramList class, implement as char array
 
 public class Encryptor {
 
@@ -103,18 +104,25 @@ public class Encryptor {
         //
     }
 
-   // public String encryptBigram(String plainBigram, char[][] keyGrid){
+    public char[] encryptBigram(String plainBigramStr, char[][] keyGrid){
         /* Rule 1:
           If the letters appear on the same row of your table,
           replace them with the letters to their immediate right respectively,
           wrapping around to the left side of the row if a letter in the original pair
           was on the right side of the row).
          */
-        //testpush
+        //TODO: this will also change when return type of plainTextToBigrams() changes
 
-//        char[] bigramCharArray = plainBigram.toCharArray();
+        char[] plainBigram = plainBigramStr.toCharArray();
+        char[] encryptedBigram = new char[2];
+        //indices are [row,col]
+        int[] firstCharIndices = searchKeyGrid(keyGrid,plainBigram[0]);
+        int[] secondCharIndices = searchKeyGrid(keyGrid,plainBigram[1]);
 
-
+        if (firstCharIndices[0] == secondCharIndices[0]){
+            encryptedBigram[0] = keyGrid[firstCharIndices[0]][(firstCharIndices[1]+1)%(keyGrid[0].length)];
+            encryptedBigram[1] = keyGrid[secondCharIndices[0]][(secondCharIndices[1]+1)%(keyGrid[0].length)];
+        }
 
 
         /* Rule 2:
@@ -134,7 +142,9 @@ public class Encryptor {
                that lies on the same row as the first letter of the plaintext pair.
          */
 
-    //}
+        return encryptedBigram;
+
+    }
 
 
     public int[] searchKeyGrid(char[][] keyGrid,char target_ch){
@@ -159,11 +169,10 @@ public class Encryptor {
 
     public String removeDuplicateChars(String str, boolean keepFirst){
         //maybe we never use keepFirst=False?
-        List<Character> alreadySeen;
+        Set<Character> alreadySeen;
         StringBuilder outputStr;
         outputStr = new StringBuilder();
-        alreadySeen = new ArrayList<>();
-        //TODO: should be hashmap
+        alreadySeen = new HashSet<>();
         for (char c : str.toCharArray()){
             if (!alreadySeen.contains(c)){
                 outputStr.append(c);
