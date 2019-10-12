@@ -100,8 +100,27 @@ class EncryptorTest {
         String bigram ="YF";
         char[] EXPECTED = {'F','P'};
         char[] ACTUAL = testEncryptor.encryptBigram(bigram,keyGrid);
-        assertArrayEquals(EXPECTED, ACTUAL);
+        assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", new String(ACTUAL)));
     }
 
+    @Test
+    @DisplayName("Should encrypt bigram with letters on same col")
+    void shouldEncryptBigramSameCol() {
+        char[][] keyGrid = testEncryptor.generatekeyGrid();
+        String bigram ="NU";
+        char[] EXPECTED = {'U','L'};
+        char[] ACTUAL = testEncryptor.encryptBigram(bigram,keyGrid);
+        assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", new String(ACTUAL)));
+    }
+
+    @Test
+    @DisplayName("Should encrypt bigram with via opposite corners")
+    void shouldEncryptBigramOppCorners() {
+        char[][] keyGrid = testEncryptor.generatekeyGrid();
+        String bigram ="TH";
+        char[] EXPECTED = {'Z','B'};
+        char[] ACTUAL = testEncryptor.encryptBigram(bigram,keyGrid);
+        assertArrayEquals(EXPECTED, ACTUAL,() -> String.format("Actual Array: %s", new String(ACTUAL)));
+    }
 
 }
