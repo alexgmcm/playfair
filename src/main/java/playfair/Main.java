@@ -22,7 +22,7 @@ public class Main {
         options.addOptionGroup(mode);
         options.addOption(Option.builder("k").required(true).longOpt("key").desc("Key for encryption/decryption").hasArg(true).build());
         options.addOption(Option.builder("t").required(true).longOpt("text").desc("Text to be encrypted/decrypted").hasArg(true).build());
-        options.addOption(Option.builder().longOpt("help").desc("Display this message.").build());
+        options.addOption(Option.builder("h").longOpt("help").desc("Display this message.").build());
 
 
         //TODO: Add support for input/output files.
@@ -39,7 +39,7 @@ public class Main {
         }
         catch( ParseException exp ) {
             // oops, something went wrong
-            System.out.println( "Parsing failed.  Reason: " + exp.getMessage() );
+            System.out.println( exp.getMessage() );
             formatter.printHelp("playfair", "Playfair Cipher Implementation", options, "", true);
             return;
         }
