@@ -1,35 +1,29 @@
 package playfair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-//TODO: Create KeyGrid class with its own tests and methods
-//TODO: Create BigramList class, implement as char array
+public class Decryptor {
 
-public class Encryptor {
-
-    private String plaintext;
+    private String ciphertext;
     private KeyGrid keyGrid;
 
-    public Encryptor(String key, String plaintext){
-        this.plaintext=plaintext;
-        this.keyGrid= new KeyGrid(key);
+    public Decryptor(String key, String ciphertext){
+        this.ciphertext=ciphertext;
+        this.keyGrid = new KeyGrid(key);
     }
 
-    public String encrypt(){
+    public String decrypt(){
         List<String> bigramArray;
         bigramArray=new ArrayList<>();
-        String[] plainBigrams=new BigramList(plaintext).getBigramList();
+                String[] plainBigrams=new BigramList(this.ciphertext).getBigramList();
         for (String bigram : plainBigrams){
-            bigramArray.add(new String(encryptBigram(bigram)));
+            bigramArray.add(new String(this.decryptBigram(bigram)));
         }
         return String.join(" ",bigramArray);
     }
 
-    /*public void setPlaintext(String plaintext){
-        this.plaintext=plaintext;
-    }*/
-
-    public char[] encryptBigram(String plainBigramStr){
+    public char[] decryptBigram(String encBigramStr){
         /* Rule 1:
           If the letters appear on the same row of your table,
           replace them with the letters to their immediate right respectively,
@@ -55,38 +49,28 @@ public class Encryptor {
         //TODO: this will also change when return type of plainTextToBigrams() changes
 
         char[][] keyGrid = this.keyGrid.getKeyGrid();
-        char[] plainBigram = plainBigramStr.toCharArray();
-        char[] encryptedBigram = new char[2];
+        char[] encryptedBigram = encBigramStr.toCharArray();
+        char[] plainBigram = new char[2];
         //indices are [row,col]
-        int[] firstCharIndices = this.keyGrid.searchKeyGrid(plainBigram[0]);
-        int[] secondCharIndices = this.keyGrid.searchKeyGrid(plainBigram[1]);
+        int[] firstCharIndices = this.keyGrid.searchKeyGrid(encryptedBigram[0]);
+        int[] secondCharIndices = this.keyGrid.searchKeyGrid(encryptedBigram[1]);
 
         if (firstCharIndices[0] == secondCharIndices[0]){
-            encryptedBigram[0] = keyGrid[firstCharIndices[0]][(firstCharIndices[1]+1)%(keyGrid[0].length)];
-            encryptedBigram[1] = keyGrid[secondCharIndices[0]][(secondCharIndices[1]+1)%(keyGrid[0].length)];
+            plainBigram[0] = keyGrid[firstCharIndices[0]][(firstCharIndices[1] - 1)>=0 ? (firstCharIndices[1] - 1) : (keyGrid[0].length-1)];
+            plainBigram[1] = keyGrid[secondCharIndices[0]][(secondCharIndices[1] - 1)>=0 ? (secondCharIndices[1] - 1) : (keyGrid[0].length-1)];
         }
         else if (firstCharIndices[1] == secondCharIndices[1]){
-            encryptedBigram[0] = keyGrid[(firstCharIndices[0]+1)%(keyGrid.length)][firstCharIndices[1]];
-            encryptedBigram[1] = keyGrid[(secondCharIndices[0]+1)%(keyGrid.length)][secondCharIndices[1]];
+            plainBigram[0] = keyGrid[(firstCharIndices[0] - 1)>=0 ? (firstCharIndices[0] - 1) : (keyGrid.length-1)][firstCharIndices[1]];
+            plainBigram[1] = keyGrid[(secondCharIndices[0] - 1)>=0 ? (secondCharIndices[0] - 1) : (keyGrid.length-1)][secondCharIndices[1]];
         }
         else{
-            encryptedBigram[0]=keyGrid[firstCharIndices[0]][secondCharIndices[1]];
-            encryptedBigram[1]=keyGrid[secondCharIndices[0]][firstCharIndices[1]];
+            plainBigram[0]=keyGrid[firstCharIndices[0]][secondCharIndices[1]];
+            plainBigram[1]=keyGrid[secondCharIndices[0]][firstCharIndices[1]];
 
         }
 
-        return encryptedBigram;
+        return plainBigram;
 
     }
-
-
-
-
-
-
-
-
-
-
 
 }
